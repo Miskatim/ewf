@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="calculator">
+        <div id="screen"></div>
+        <div class="row row-1">
+            <div class="numbers" id="one">1</div>
+            <div class="numbers" id="two">2</div>
+            <div class="numbers" id="tree">3</div>
+            <div class="numbers" id="four">4</div>
+            <div class="numbers" id="five">5</div>
+            <div class="numbers" id="six">6</div>
+            <div class="numbers" id="seven">7</div>
+            <div class="numbers" id="eight">8</div>
+            <div class="numbers" id="nine">9</div>
+            <div class="numbers" id="zero">0</div>
+            <div id="plus">+</div>
+            <div id="minus">-</div>
+            <div id="multiply">*</div>
+            <div id="divided">/</div>
+            <div id="equal">=</div>
+            <div id="delete">delete</div>
+        </div>
+    </div>
+
+    <style>
+        .calculator {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #screen {
+            width: 200px;
+            height: 50px;
+            border: black solid 2px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            /*width: 200px;*/
+            margin: 5px auto;
+        }
+
+        .row div {
+            width: 20%;
+            padding: 10px;
+            border: solid black 2px;
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        let screen = document.getElementById("screen");
+        let one = document.getElementById("one");
+        let two = document.getElementById("two");
+        let plus = document.getElementById("plus");
+        let equal = document.getElementById("equal");
+        let deletee = document.getElementById("delete");
+        let numbers = document.querySelectorAll(".numbers");
+        let minus = document.getElementById("minus");
+        let divided = document.getElementById("divided");
+        let multiply = document.getElementById("multiply")
+
+        for (let index = 0; index < numbers.length; index++) {
+            console.log(numbers[index]);
+            //if (numbers !== "+" && numbers !== "=")
+            //{
+
+            numbers[index].addEventListener("click", (event) => {
+                let id = event.target.id;
+
+                let number = document.getElementById(id).textContent;
+                //if (number !== "+" && number !== "=") {
+                screen.textContent += number;
+                //}
+            })
+            //}
+
+
+        }
+        /*
+            let plusAvailable = true;
+            let minusAvailable = false;
+            let firstAdder = 0;
+            let secondAdder = 0;
+    */
+        deletee.addEventListener("click", yu);
+        function yu() {
+            location.reload();
+        }plus.addEventListener("click", () => {
+            if (screen.textContent == "" || findOperatorInTheEnd(screen.textContent)) {
+                return;
+            }
+            
+            if (findOperatorInside(screen.textContent)) {
+                count(screen);
+            }
+            screen.textContent += "+";
+        });
+
+        minus.addEventListener("click", () => {
+            if (screen.textContent == "" || findOperatorInTheEnd(screen.textContent)) {
+                return;
+            }
+            if (findOperatorInside(screen.textContent)) {
+                count(screen);
+            }
+            screen.textContent += "-"
+        })
+
+        divided.addEventListener("click", () => {
+            if (screen.textContent == "" || findOperatorInTheEnd(screen.textContent)) {
+                return;
+            }
+            if (findOperatorInside(screen.textContent)) {
+                count(screen);
+            }
+            screen.textContent += "/"
+        })
+
+        multiply.addEventListener("click", () => {
+            if (screen.textContent == "" || findOperatorInTheEnd(screen.textContent)) {
+                return;
+            }
+            if (findOperatorInside(screen.textContent)) {
+                count(screen);
+            }
+            screen.textContent += "*"
+        })
+
+        equal.addEventListener("click", () => {
+            if (screen.textContent == "" || findOperatorInTheEnd(screen.textContent)) {
+                return;
+            }
+            if (!findOperatorInside(screen.textContent)) {
+                return;
+            }
+            count(screen);
+        })
+
+
+        function findOperatorInside(string) {
+            for (let i = 0; i < string.length - 1; i++) {
+                let char = string[i];
+                if (char == "+" || char == "-" || char == "*" || char == "/") {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function findOperatorInTheEnd(string) {
+            let char = string[string.length - 1];
+            if (char == "+" || char == "-" || char == "*" || char == "/") {
+                return true;
+            }
+            return false;
+        }
+
+        function count(screen) {
+            let text = screen.textContent;
+            for (let i = 0; i < text.length; i++) {
+                if (text[i] == "+") {
+                    let num = addNumbers(text);
+                    screen.textContent = num;
+                    return;
+                }
+                if (text[i] == "-") {
+                    screen.textContent = subtractNumbers(text);
+                    return;
+                }
+                if (text[i] == "/") {
+                    screen.textContent = divideNumbers(text);
+                    return;
+                }
+                if (text[i] == "*") {
+                    screen.textContent = multiplyNumbers(text);
+                    return;
+                }
+            }
+        }
+
+        function addNumbers(string) {
+            let array = string.split("+");
+            let result = parseInt(array[0]) + parseInt(array[1]);
+            return result;
+        }
+
+        function subtractNumbers(string) {
+            let array = string.split("-");
+            let result = parseInt(array[0]) - parseInt(array[1]);
+            return result;
+        }
+
+        function divideNumbers(string) {
+            let array = string.split("/");
+            let result = parseInt(parseInt(array[0]) / parseInt(array[1]));
+            return result;
+        }
+
+        function multiplyNumbers(string) {
+            let array = string.split("*");
+            let result = parseInt(array[0]) * parseInt(array[1]);
+            return result;
+        }
+
+    </script>
+
+        
+
+</body>
+</html>
